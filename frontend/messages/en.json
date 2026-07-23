@@ -1,0 +1,24 @@
+{
+  "splash": {
+    "title": "Bueza Pets",
+    "tagline": "Livestock care, one tap away"
+  },
+  "languageSelector": {
+    "title": "Choose your language",
+    "subtitle": "You can change this later in settings",
+    "label": "Language",
+    "continue": "Continue"
+  },
+  "home": {
+    "title": "Home",
+    "subtitle": "Coming soon"
+  },
+  "login": {
+    "title": "Login",
+    "subtitle": "Coming soon"
+  },
+  "describeProblem": {
+    "title": "Describe my animal problem",
+    "subtitle": "Coming soon"
+  }
+}

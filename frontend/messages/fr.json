@@ -1,0 +1,24 @@
+{
+  "splash": {
+    "title": "Bueza Pets",
+    "tagline": "Le soin du bétail, à portée de main"
+  },
+  "languageSelector": {
+    "title": "Choisissez votre langue",
+    "subtitle": "Vous pourrez la modifier plus tard dans les paramètres",
+    "label": "Langue",
+    "continue": "Continuer"
+  },
+  "home": {
+    "title": "Accueil",
+    "subtitle": "Bientôt disponible"
+  },
+  "login": {
+    "title": "Connexion",
+    "subtitle": "Bientôt disponible"
+  },
+  "describeProblem": {
+    "title": "Décrire le problème de mon animal",
+    "subtitle": "Bientôt disponible"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "splash": {
+    "title": "Bueza Pets",
+    "tagline": "Cuidado del ganado, a un toque de distancia"
+  },
+  "languageSelector": {
+    "title": "Elige tu idioma",
+    "subtitle": "Puedes cambiarlo más tarde en ajustes",
+    "label": "Idioma",
+    "continue": "Continuar"
+  },
+  "home": {
+    "title": "Inicio",
+    "subtitle": "Próximamente"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Próximamente"
+  },
+  "describeProblem": {
+    "title": "Describir el problema de mi animal",
+    "subtitle": "Próximamente"
+  }
+}
