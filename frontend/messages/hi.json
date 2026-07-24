@@ -1,0 +1,33 @@
+{
+  "splash": {
+    "title": "Bueza Pets",
+    "tagline": "पशुधन की देखभाल, बस एक टैप में"
+  },
+  "languageSelector": {
+    "title": "अपनी भाषा चुनें",
+    "subtitle": "आप इसे बाद में सेटिंग्स में बदल सकते हैं",
+    "label": "भाषा",
+    "continue": "जारी रखें"
+  },
+  "home": {
+    "title": "होम",
+    "subtitle": "जल्द आ रहा है"
+  },
+  "login": {
+    "title": "लॉगिन",
+    "subtitle": "जारी रखने के लिए अपना फ़ोन नंबर दर्ज करें",
+    "phoneLabel": "फ़ोन नंबर",
+    "phonePlaceholder": "+91 98765 43210",
+    "sendOtpButton": "कोड भेजें",
+    "otpLabel": "सत्यापन कोड",
+    "otpPlaceholder": "6 अंकों का कोड",
+    "verifyButton": "सत्यापित करें",
+    "mockOtpHint": "मॉक कोड (केवल डेव के लिए): {code}",
+    "requestError": "कोड भेजा नहीं जा सका। कृपया पुनः प्रयास करें।",
+    "verifyError": "अमान्य या समाप्त कोड। कृपया पुनः प्रयास करें।"
+  },
+  "describeProblem": {
+    "title": "अपने पशु की समस्या बताएं",
+    "subtitle": "जल्द आ रहा है"
+  }
+}

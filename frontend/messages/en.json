@@ -17,7 +17,7 @@
     "title": "Login",
     "subtitle": "Enter your phone number to continue",
     "phoneLabel": "Phone number",
-    "phonePlaceholder": "+1 555 123 4567",
+    "phonePlaceholder": "+91 98765 43210",
     "sendOtpButton": "Send code",
     "otpLabel": "Verification code",
     "otpPlaceholder": "6-digit code",
