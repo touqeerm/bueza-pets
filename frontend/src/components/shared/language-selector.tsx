@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { LOCALE_METADATA } from "@/i18n/locale-metadata";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 export function LanguageSelector() {
@@ -17,6 +18,7 @@ export function LanguageSelector() {
 
   function handleSelect(nextLocale: AppLocale) {
     if (nextLocale === locale) return;
+    trackEvent("language_selected", { locale: nextLocale });
     startTransition(() => {
       router.replace(pathname, { locale: nextLocale });
     });

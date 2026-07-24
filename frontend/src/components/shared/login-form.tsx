@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
+import { trackEvent } from "@/lib/analytics";
 
 type Step = "phone" | "otp";
 
@@ -21,6 +22,10 @@ export function LoginForm() {
   const [mockOtp, setMockOtp] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    trackEvent("login_started");
+  }, []);
 
   async function handleRequestOtp(event: FormEvent) {
     event.preventDefault();
@@ -54,6 +59,8 @@ export function LoginForm() {
         body: JSON.stringify({ phone_number: phoneNumber, code }),
       });
       if (!response.ok) throw new Error();
+      const data = await response.json();
+      trackEvent("login_completed", {}, data.user?.id);
       router.replace("/home");
     } catch {
       setError(t("verifyError"));

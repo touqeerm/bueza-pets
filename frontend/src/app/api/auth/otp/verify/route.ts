@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { getBackendApiUrl, isSecureCookieEnabled, SESSION_COOKIE_NAME, SESSION_MAX_AGE_SECONDS } from "@/lib/auth";
+import { isSecureCookieEnabled, SESSION_COOKIE_NAME, SESSION_MAX_AGE_SECONDS } from "@/lib/auth";
+import { getBackendApiUrl } from "@/lib/backend";
 
 export async function POST(request: Request) {
   const body = await request.json();

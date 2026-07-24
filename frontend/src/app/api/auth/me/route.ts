@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { getBackendApiUrl, SESSION_COOKIE_NAME } from "@/lib/auth";
+import { SESSION_COOKIE_NAME } from "@/lib/auth";
+import { getBackendApiUrl } from "@/lib/backend";
 
 export async function GET() {
   const token = (await cookies()).get(SESSION_COOKIE_NAME)?.value;

@@ -11,7 +11,8 @@
   },
   "home": {
     "title": "Home",
-    "subtitle": "Coming soon"
+    "subtitle": "Get help with your animal",
+    "describeProblemCta": "Describe my animal's problem"
   },
   "login": {
     "title": "Login",

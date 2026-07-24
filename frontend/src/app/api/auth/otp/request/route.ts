@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getBackendApiUrl } from "@/lib/auth";
+import { getBackendApiUrl } from "@/lib/backend";
 
 export async function POST(request: Request) {
   const body = await request.json();

@@ -4,10 +4,15 @@ import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 
 import { useRouter } from "@/i18n/navigation";
+import { trackEvent } from "@/lib/analytics";
 
 export default function SplashPage() {
   const router = useRouter();
   const t = useTranslations("splash");
+
+  useEffect(() => {
+    trackEvent("app_opened");
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

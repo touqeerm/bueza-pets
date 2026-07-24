@@ -8,9 +8,11 @@ from app.application.use_cases.check_health import CheckHealthUseCase
 from app.application.use_cases.get_current_user import GetCurrentUserUseCase
 from app.application.use_cases.logout import LogoutUseCase
 from app.application.use_cases.request_otp import RequestOtpUseCase
+from app.application.use_cases.track_event import TrackEventUseCase
 from app.application.use_cases.verify_otp import VerifyOtpUseCase
 from app.domain.entities.user import User
 from app.infrastructure.database.session import get_session
+from app.infrastructure.repositories.event_repository import SqlAlchemyEventRepository
 from app.infrastructure.repositories.health_repository import SqlAlchemyHealthRepository
 from app.infrastructure.repositories.otp_repository import SqlAlchemyOtpRepository
 from app.infrastructure.repositories.session_repository import SqlAlchemySessionRepository
@@ -55,6 +57,12 @@ def get_current_user_use_case(
         session_repository=SqlAlchemySessionRepository(session),
         user_repository=SqlAlchemyUserRepository(session),
     )
+
+
+def get_track_event_use_case(
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> TrackEventUseCase:
+    return TrackEventUseCase(SqlAlchemyEventRepository(session))
 
 
 async def get_bearer_token(
