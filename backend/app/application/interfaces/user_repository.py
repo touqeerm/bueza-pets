@@ -1,0 +1,9 @@
+from typing import Protocol
+
+from app.domain.entities.user import User
+
+
+class UserRepository(Protocol):
+    async def get_by_phone_number(self, phone_number: str) -> User | None: ...
+    async def get_by_id(self, user_id: int) -> User | None: ...
+    async def create(self, phone_number: str) -> User: ...

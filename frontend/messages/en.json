@@ -15,7 +15,16 @@
   },
   "login": {
     "title": "Login",
-    "subtitle": "Coming soon"
+    "subtitle": "Enter your phone number to continue",
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "+1 555 123 4567",
+    "sendOtpButton": "Send code",
+    "otpLabel": "Verification code",
+    "otpPlaceholder": "6-digit code",
+    "verifyButton": "Verify",
+    "mockOtpHint": "Mock code (dev only): {code}",
+    "requestError": "Couldn't send the code. Please try again.",
+    "verifyError": "Invalid or expired code. Please try again."
   },
   "describeProblem": {
     "title": "Describe my animal problem",

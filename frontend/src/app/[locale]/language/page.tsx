@@ -15,7 +15,7 @@ export default async function Page() {
       </div>
       <LanguageSelector />
       <Link
-        href="/home"
+        href="/login"
         className={buttonVariants({ size: "lg", className: "w-full max-w-xs" })}
       >
         {t("continue")}

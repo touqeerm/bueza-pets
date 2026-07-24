@@ -15,7 +15,16 @@
   },
   "login": {
     "title": "Connexion",
-    "subtitle": "Bientôt disponible"
+    "subtitle": "Entrez votre numéro de téléphone pour continuer",
+    "phoneLabel": "Numéro de téléphone",
+    "phonePlaceholder": "+1 555 123 4567",
+    "sendOtpButton": "Envoyer le code",
+    "otpLabel": "Code de vérification",
+    "otpPlaceholder": "Code à 6 chiffres",
+    "verifyButton": "Vérifier",
+    "mockOtpHint": "Code simulé (dev uniquement) : {code}",
+    "requestError": "Impossible d'envoyer le code. Veuillez réessayer.",
+    "verifyError": "Code invalide ou expiré. Veuillez réessayer."
   },
   "describeProblem": {
     "title": "Décrire le problème de mon animal",
