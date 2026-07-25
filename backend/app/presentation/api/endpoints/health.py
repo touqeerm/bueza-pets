@@ -1,17 +1,24 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.application.use_cases.check_health import CheckHealthUseCase
-from app.presentation.dependencies import get_check_health_use_case
+from app.infrastructure.database.session import get_session
 from app.presentation.schemas.health import HealthResponse
 
 router = APIRouter()
 
 
 @router.get("/health", response_model=HealthResponse)
-async def get_health(
-    use_case: Annotated[CheckHealthUseCase, Depends(get_check_health_use_case)],
-) -> HealthResponse:
-    result = await use_case.execute()
-    return HealthResponse(status=result.status, database_connected=result.database_connected)
+async def get_health(session: Annotated[AsyncSession, Depends(get_session)]) -> HealthResponse:
+    try:
+        await session.execute(text("SELECT 1"))
+        database_connected = True
+    except Exception:
+        database_connected = False
+
+    return HealthResponse(
+        status="ok" if database_connected else "degraded",
+        database_connected=database_connected,
+    )

@@ -4,7 +4,6 @@ from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.application.use_cases.check_health import CheckHealthUseCase
 from app.application.use_cases.get_current_user import GetCurrentUserUseCase
 from app.application.use_cases.logout import LogoutUseCase
 from app.application.use_cases.request_otp import RequestOtpUseCase
@@ -13,19 +12,11 @@ from app.application.use_cases.verify_otp import VerifyOtpUseCase
 from app.domain.entities.user import User
 from app.infrastructure.database.session import get_session
 from app.infrastructure.repositories.event_repository import SqlAlchemyEventRepository
-from app.infrastructure.repositories.health_repository import SqlAlchemyHealthRepository
 from app.infrastructure.repositories.otp_repository import SqlAlchemyOtpRepository
 from app.infrastructure.repositories.session_repository import SqlAlchemySessionRepository
 from app.infrastructure.repositories.user_repository import SqlAlchemyUserRepository
 
 bearer_scheme = HTTPBearer()
-
-
-def get_check_health_use_case(
-    session: Annotated[AsyncSession, Depends(get_session)],
-) -> CheckHealthUseCase:
-    repository = SqlAlchemyHealthRepository(session)
-    return CheckHealthUseCase(repository)
 
 
 def get_request_otp_use_case(
