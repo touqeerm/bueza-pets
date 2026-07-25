@@ -41,7 +41,7 @@ export function LanguageSelector() {
             disabled={isPending}
             onClick={() => handleSelect(loc)}
             className={cn(
-              "flex items-center justify-between rounded-lg border px-4 py-3 text-left text-sm font-medium transition-colors disabled:opacity-50",
+              "flex min-h-12 items-center justify-between rounded-lg border px-4 py-3 text-left text-base font-medium outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50",
               isActive
                 ? "border-primary bg-primary/10 text-primary"
                 : "border-border hover:bg-muted",

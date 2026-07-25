@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,7 @@ import { trackEvent } from "@/lib/analytics";
 type Step = "phone" | "otp";
 
 const inputClassName =
-  "rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
+  "h-12 rounded-lg border border-border bg-background px-4 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
 export function LoginForm() {
   const t = useTranslations("login");
@@ -84,8 +85,13 @@ export function LoginForm() {
           placeholder={t("phonePlaceholder")}
           className={inputClassName}
         />
-        {error ? <p className="text-sm text-destructive">{error}</p> : null}
+        {error ? (
+          <p role="alert" className="text-sm text-destructive">
+            {error}
+          </p>
+        ) : null}
         <Button type="submit" disabled={isSubmitting} size="lg" className="w-full">
+          {isSubmitting ? <Loader2 data-icon="inline-start" className="animate-spin" /> : null}
           {t("sendOtpButton")}
         </Button>
       </form>
@@ -108,8 +114,13 @@ export function LoginForm() {
         className={`${inputClassName} tracking-widest`}
       />
       {mockOtp ? <p className="text-xs text-muted-foreground">{t("mockOtpHint", { code: mockOtp })}</p> : null}
-      {error ? <p className="text-sm text-destructive">{error}</p> : null}
+      {error ? (
+        <p role="alert" className="text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
       <Button type="submit" disabled={isSubmitting} size="lg" className="w-full">
+        {isSubmitting ? <Loader2 data-icon="inline-start" className="animate-spin" /> : null}
         {t("verifyButton")}
       </Button>
     </form>

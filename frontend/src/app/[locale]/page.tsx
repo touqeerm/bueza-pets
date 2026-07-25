@@ -23,7 +23,7 @@ export default function SplashPage() {
 
   return (
     <main
-      className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center"
+      className="flex flex-1 cursor-pointer animate-in fade-in flex-col items-center justify-center gap-4 px-6 text-center duration-700"
       onClick={() => router.replace("/language")}
     >
       <h1 className="text-4xl font-bold tracking-tight">{t("title")}</h1>
