@@ -7,17 +7,24 @@
 # certbot's webroot validation will fail otherwise. See the DNS section
 # of the README for exact records.
 #
-# Sequence, and why: the full nginx/bueza-pets.conf references certs that
-# don't exist yet, so deploying it first would fail `nginx -t` and refuse
-# to reload (a safe failure, but it means the site can't go live that
-# way). Instead: deploy an HTTP-only version first (just enough for
+# Sequence, and why: the full nginx/z-bueza-pets.conf references certs
+# that don't exist yet, so deploying it first would fail `nginx -t` and
+# refuse to reload (a safe failure, but it means the site can't go live
+# that way). Instead: deploy an HTTP-only version first (just enough for
 # certbot's ACME challenge to be served), obtain the real cert, then swap
 # in the full config with the cert paths now valid.
+#
+# Filename note: prefixed "z-" so it sorts alphabetically AFTER the
+# existing default.conf and n8n.conf in conf.d/. nginx's include picks a
+# default_server for each port from whichever file loads first when none
+# is explicitly marked — without the prefix this file would silently
+# become the new default for any request with no matching Host header,
+# changing pre-existing behavior we have no reason to touch.
 set -euo pipefail
 
 NGINX_CONTAINER="odoo16-nginx"
-CONF_NAME="bueza-pets.conf"
-REPO_CONF="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/nginx/bueza-pets.conf"
+CONF_NAME="z-bueza-pets.conf"
+REPO_CONF="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/nginx/z-bueza-pets.conf"
 DOMAINS=(app.bueza.in api.bueza.in staging.app.bueza.in staging.api.bueza.in)
 CERT_NAME="bueza-pets"
 WEBROOT="/opt/odoo/webroot"
@@ -48,7 +55,7 @@ docker exec "$NGINX_CONTAINER" nginx -s reload
 echo "==> HTTP-only config live. Verifying each domain resolves here before requesting a cert..."
 
 for domain in "${DOMAINS[@]}"; do
-  code=$(curl -s -o /dev/null -w "%{http_code}" "http://$domain/" || echo "000")
+  code=$(curl -s -o /dev/null -m 10 -w "%{http_code}" "http://$domain/" 2>/dev/null); code="${code:-000}"
   echo "    $domain -> HTTP $code"
   if [ "$code" != "200" ]; then
     echo "==> $domain did not respond as expected. Check DNS before continuing (see README)." >&2
@@ -72,6 +79,6 @@ docker exec "$NGINX_CONTAINER" nginx -s reload
 
 echo "==> Done. Verifying HTTPS..."
 for domain in "${DOMAINS[@]}"; do
-  code=$(curl -s -o /dev/null -w "%{http_code}" "https://$domain/" || echo "000")
+  code=$(curl -s -o /dev/null -m 10 -w "%{http_code}" "https://$domain/" 2>/dev/null); code="${code:-000}"
   echo "    https://$domain -> HTTP $code"
 done
