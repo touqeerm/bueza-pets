@@ -8,6 +8,18 @@
 # them by container name, the same way it already reaches `odoo` and
 # `pet-matchmaking`.
 
+# Scoped log rotation for just this project's containers, not a Docker
+# daemon-wide change — the daemon-wide equivalent (/etc/docker/daemon.json)
+# would require restarting the Docker daemon, which restarts every
+# container on this shared host at once. This applies per-container
+# instead, with zero effect on anything outside this compose project.
+x-logging: &default-logging
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
 services:
   db:
     image: postgres:16-alpine
@@ -22,6 +34,7 @@ services:
     networks:
       - internal
     mem_limit: 512m
+    <<: *default-logging
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
@@ -44,6 +57,7 @@ services:
       - internal
       - odoo-network
     mem_limit: 512m
+    <<: *default-logging
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 10s
@@ -68,6 +82,7 @@ services:
       - internal
       - odoo-network
     mem_limit: 512m
+    <<: *default-logging
 
 networks:
   internal:
