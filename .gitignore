@@ -9,6 +9,8 @@
 .env
 .env.*
 !.env.example
+!.env.production.example
+!.env.staging.example
 
 # backend (populated in a later milestone)
 backend/__pycache__/

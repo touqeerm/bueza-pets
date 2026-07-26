@@ -1,0 +1,79 @@
+# Staging stack. Run from the repo root of the STAGING worktree
+# (/root/bueza-pets-staging), not the production checkout:
+#   docker compose -f docker/compose.staging.yml --env-file .env.staging -p bueza-pets-staging up -d --build
+#
+# Mirrors compose.prod.yml exactly, with staging-only names/ports/volumes/
+# database so the two environments can never collide. See compose.prod.yml
+# for the networking rationale (db internal-only, backend/frontend also on
+# the shared odoo-network for the host nginx to reach them).
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bueza-pets-db-staging
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - bueza_pets_staging_postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
+    mem_limit: 384m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../backend
+    container_name: bueza-pets-backend-staging
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    ports:
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+      - odoo-network
+    mem_limit: 384m
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ../frontend
+    container_name: bueza-pets-frontend-staging
+    restart: unless-stopped
+    environment:
+      BACKEND_API_URL: http://backend:8000
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      NEXT_TELEMETRY_DISABLED: 1
+    ports:
+      - "3011:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - internal
+      - odoo-network
+    mem_limit: 384m
+
+networks:
+  internal:
+    name: bueza-pets-staging-network
+  odoo-network:
+    external: true
+
+volumes:
+  bueza_pets_staging_postgres_data:
+    name: bueza_pets_staging_postgres_data
