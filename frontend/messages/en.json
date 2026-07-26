@@ -29,6 +29,7 @@
   },
   "describeProblem": {
     "title": "Describe my animal problem",
-    "subtitle": "Coming soon"
+    "comingSoonBadge": "Coming soon",
+    "comingSoonMessage": "We're building this feature so you can describe your animal's problem and get expert guidance in your own language. Check back soon!"
   }
 }
