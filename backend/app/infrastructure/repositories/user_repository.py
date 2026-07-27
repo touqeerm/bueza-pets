@@ -27,4 +27,9 @@ class SqlAlchemyUserRepository:
 
     @staticmethod
     def _to_entity(model: UserModel) -> User:
-        return User(id=model.id, phone_number=model.phone_number, created_at=model.created_at)
+        return User(
+            id=model.id,
+            phone_number=model.phone_number,
+            is_admin=model.is_admin,
+            created_at=model.created_at,
+        )

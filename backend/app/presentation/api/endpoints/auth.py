@@ -41,13 +41,13 @@ async def verify_otp(
     user, session = await use_case.execute(payload.phone_number, payload.code)
     return OtpVerifyResponse(
         access_token=session.token,
-        user=UserResponse(id=user.id, phone_number=user.phone_number),
+        user=UserResponse(id=user.id, phone_number=user.phone_number, is_admin=user.is_admin),
     )
 
 
 @router.get("/me", response_model=UserResponse)
 async def get_me(user: Annotated[User, Depends(get_current_user)]) -> UserResponse:
-    return UserResponse(id=user.id, phone_number=user.phone_number)
+    return UserResponse(id=user.id, phone_number=user.phone_number, is_admin=user.is_admin)
 
 
 @router.post("/logout", status_code=204)

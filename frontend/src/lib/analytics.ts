@@ -3,10 +3,16 @@
 export type AnalyticsEventName =
   | "app_opened"
   | "language_selected"
-  | "login_started"
-  | "login_completed"
+  | "phone_entered"
+  | "otp_requested"
+  | "otp_verified"
+  | "onboarding_completed"
   | "home_loaded"
-  | "describe_problem_clicked";
+  | "describe_problem_clicked"
+  | "problem_submitted"
+  | "vet_booking_started"
+  | "vet_booking_completed"
+  | "consultation_completed";
 
 export function trackEvent(
   eventName: AnalyticsEventName,

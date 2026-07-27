@@ -1,5 +1,7 @@
+from datetime import datetime
 from typing import Any
 
+from sqlalchemy import String, cast, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.domain.entities.event import AnalyticsEvent
@@ -22,6 +24,22 @@ class SqlAlchemyEventRepository:
         await self._session.commit()
         await self._session.refresh(model)
         return self._to_entity(model)
+
+    async def count_distinct_actors(
+        self,
+        event_name: str,
+        since: datetime,
+        property_filters: dict[str, Any],
+    ) -> int:
+        actor = func.coalesce(cast(EventModel.user_id, String), EventModel.anonymous_id)
+        query = select(func.count(func.distinct(actor))).where(
+            EventModel.name == event_name,
+            EventModel.created_at >= since,
+        )
+        if property_filters:
+            query = query.where(EventModel.properties.contains(property_filters))
+        result = await self._session.execute(query)
+        return result.scalar_one()
 
     @staticmethod
     def _to_entity(model: EventModel) -> AnalyticsEvent:

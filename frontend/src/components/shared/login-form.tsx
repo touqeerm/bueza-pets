@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -24,14 +24,11 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    trackEvent("login_started");
-  }, []);
-
   async function handleRequestOtp(event: FormEvent) {
     event.preventDefault();
     setError(null);
     setIsSubmitting(true);
+    trackEvent("phone_entered");
     try {
       const response = await fetch("/api/auth/otp/request", {
         method: "POST",
@@ -42,6 +39,7 @@ export function LoginForm() {
       const data = await response.json();
       setMockOtp(data.otp_code);
       setStep("otp");
+      trackEvent("otp_requested");
     } catch {
       setError(t("requestError"));
     } finally {
@@ -61,7 +59,7 @@ export function LoginForm() {
       });
       if (!response.ok) throw new Error();
       const data = await response.json();
-      trackEvent("login_completed", {}, data.user?.id);
+      trackEvent("otp_verified", {}, data.user?.id);
       router.replace("/home");
     } catch {
       setError(t("verifyError"));

@@ -18,6 +18,7 @@ class OtpVerifyRequest(BaseModel):
 class UserResponse(BaseModel):
     id: int
     phone_number: str
+    is_admin: bool
 
 
 class OtpVerifyResponse(BaseModel):

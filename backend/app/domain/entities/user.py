@@ -6,4 +6,5 @@ from datetime import datetime
 class User:
     id: int
     phone_number: str
+    is_admin: bool
     created_at: datetime
